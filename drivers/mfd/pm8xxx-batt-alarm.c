@@ -1,4 +1,4 @@
-/* Copyright (c) 2011, The Linux Foundation. All rights reserved.
+/* Copyright (c) 2011, Code Aurora Forum. All rights reserved.
  *
  * This program is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License version 2 and
@@ -240,6 +240,30 @@ bail:
 	return rc;
 }
 EXPORT_SYMBOL(pm8xxx_batt_alarm_disable);
+
+/**
+ * pm8xxx_batt_alarm_state_set - enable or disable the threshold comparators
+ * @enable_lower_comparator: 1 = enable comparator, 0 = disable comparator
+ * @enable_upper_comparator: 1 = enable comparator, 0 = disable comparator
+ *
+ * RETURNS: an appropriate -ERRNO error value on error, or zero for success.
+ */
+int pm8xxx_batt_alarm_state_set(int enable_lower_comparator,
+				int enable_upper_comparator)
+{
+	if (enable_lower_comparator)
+		pm8xxx_batt_alarm_enable(PM8XXX_BATT_ALARM_LOWER_COMPARATOR);
+	else
+		pm8xxx_batt_alarm_disable(PM8XXX_BATT_ALARM_LOWER_COMPARATOR);
+
+	if (enable_upper_comparator)
+		pm8xxx_batt_alarm_enable(PM8XXX_BATT_ALARM_UPPER_COMPARATOR);
+	else
+		pm8xxx_batt_alarm_disable(PM8XXX_BATT_ALARM_UPPER_COMPARATOR);
+
+	return 0;
+}
+EXPORT_SYMBOL(pm8xxx_batt_alarm_state_set);
 
 /**
  * pm8xxx_batt_alarm_threshold_set - set the lower and upper alarm thresholds
