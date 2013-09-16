@@ -45,7 +45,11 @@
 
 #define PSHOLD_CTL_SU (MSM_TLMM_BASE + 0x820)
 
+#ifndef CONFIG_MACH_HTC
 #define RESTART_REASON_ADDR 0x65C
+#else
+#define RESTART_REASON_ADDR 0xF00
+#endif
 #define DLOAD_MODE_ADDR     0x0
 
 #define RESET_REASON_LPM            0x1A2B3C10
