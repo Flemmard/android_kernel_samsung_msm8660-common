@@ -126,6 +126,10 @@ extern struct platform_device msm_gsbi11_qup_i2c_device;
 #if defined(CONFIG_PN544_NFC)
 extern struct platform_device msm_gsbi10_qup_i2c_device;
 #endif
+#if defined(CONFIG_MACH_HTC)
+extern struct platform_device msm_gsbi5_qup_i2c_device;
+extern struct platform_device msm_gsbi10_qup_i2c_device;
+#endif
 
 extern struct platform_device msm_slim_ctrl;
 extern struct platform_device msm_device_sps;

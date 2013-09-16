@@ -441,6 +441,39 @@ static struct resource gsbi4_qup_i2c_resources[] = {
 	},
 };
 
+static struct resource gsbi5_qup_i2c_resources[] = {
+	{
+		.name   = "qup_phys_addr",
+		.start  = MSM_GSBI5_QUP_PHYS,
+		.end    = MSM_GSBI5_QUP_PHYS + SZ_4K - 1,
+		.flags  = IORESOURCE_MEM,
+	},
+	{
+		.name   = "gsbi_qup_i2c_addr",
+		.start  = MSM_GSBI5_PHYS,
+		.end    = MSM_GSBI5_PHYS + 4 - 1,
+		.flags  = IORESOURCE_MEM,
+	},
+	{
+		.name   = "qup_err_intr",
+		.start  = GSBI5_QUP_IRQ,
+		.end    = GSBI5_QUP_IRQ,
+		.flags  = IORESOURCE_IRQ,
+	},
+	{
+		.name	= "i2c_clk",
+		.start	= 52,
+		.end	= 52,
+		.flags	= IORESOURCE_IO,
+	},
+	{
+		.name	= "i2c_sda",
+		.start	= 51,
+		.end	= 51,
+		.flags	= IORESOURCE_IO,
+	},
+};
+
 static struct resource gsbi7_qup_i2c_resources[] = {
 	{
 		.name	= "qup_phys_addr",
@@ -560,7 +593,7 @@ static struct resource gsbi12_qup_i2c_resources[] = {
 	},
 };
 
-#if defined(CONFIG_PN544_NFC)
+#if defined(CONFIG_PN544_NFC) || defined(CONFIG_MACH_HTC)
 static struct resource gsbi10_qup_i2c_resources[] = {
 	{
 		.name	= "qup_phys_addr",
@@ -943,6 +976,14 @@ struct platform_device msm_gsbi4_qup_i2c_device = {
 	.resource	= gsbi4_qup_i2c_resources,
 };
 
+/* Use GSBI5 QUP for /dev/i2c-9 */
+struct platform_device msm_gsbi5_qup_i2c_device = {
+	.name           = "qup_i2c",
+	.id             = MSM_GSBI5_QUP_I2C_BUS_ID,
+	.num_resources  = ARRAY_SIZE(gsbi5_qup_i2c_resources),
+	.resource       = gsbi5_qup_i2c_resources,
+};
+
 /* Use GSBI8 QUP for /dev/i2c-3 */
 struct platform_device msm_gsbi8_qup_i2c_device = {
 	.name		= "qup_i2c",
@@ -985,7 +1026,7 @@ struct platform_device msm_gsbi12_qup_i2c_device = {
 	.resource	= gsbi12_qup_i2c_resources,
 };
 
-#if defined(CONFIG_PN544_NFC)
+#if defined(CONFIG_PN544_NFC) || defined(CONFIG_MACH_HTC)
 /* Use GSBI10 QUP for /dev/i2c-5 (Sensors) */
 struct platform_device msm_gsbi10_qup_i2c_device = {
 	.name		= "qup_i2c",
@@ -1030,6 +1071,24 @@ struct platform_device msm_device_ssbi_pmic2 = {
 #endif
 
 #ifdef CONFIG_I2C_SSBI
+/* 8901 PMIC SSBI on /dev/i2c-7 */
+#define MSM_SSBI2_PMIC2B_PHYS	0x00C00000
+static struct resource msm_ssbi2_resources[] = {
+	{
+		.name   = "ssbi_base",
+		.start	= MSM_SSBI2_PMIC2B_PHYS,
+		.end	= MSM_SSBI2_PMIC2B_PHYS + SZ_4K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+};
+
+struct platform_device msm_device_ssbi2 = {
+	.name		= "i2c_ssbi",
+	.id		= MSM_SSBI2_I2C_BUS_ID,
+	.num_resources	= ARRAY_SIZE(msm_ssbi2_resources),
+	.resource	= msm_ssbi2_resources,
+};
+
 /* CODEC SSBI on /dev/i2c-8 */
 #define MSM_SSBI3_PHYS  0x18700000
 static struct resource msm_ssbi3_resources[] = {
@@ -1857,16 +1916,31 @@ struct platform_device msm_device_otg = {
 	.resource	= resources_otg,
 };
 
+static struct resource resources_hsusb[] = {
+	{
+		.start	= 0x12500000,
+		.end	= 0x12500000 + SZ_1K - 1,
+		.flags	= IORESOURCE_MEM,
+	},
+	{
+		.start	= USB1_HS_IRQ,
+		.end	= USB1_HS_IRQ,
+		.flags	= IORESOURCE_IRQ,
+	},
+};
+
 static u64 dma_mask = 0xffffffffULL;
 struct platform_device msm_device_gadget_peripheral = {
 	.name		= "msm_hsusb",
 	.id		= -1,
+	.num_resources	= ARRAY_SIZE(resources_hsusb),
+	.resource	= resources_hsusb,
 	.dev		= {
 		.dma_mask 		= &dma_mask,
 		.coherent_dma_mask	= 0xffffffffULL,
 	},
 };
-#ifdef CONFIG_USB_EHCI_MSM_72K
+//#ifdef CONFIG_USB_EHCI_MSM_72K
 static struct resource resources_hsusb_host[] = {
 	{
 		.start	= 0x12500000,
@@ -1891,6 +1965,7 @@ struct platform_device msm_device_hsusb_host = {
 	},
 };
 
+#ifdef CONFIG_USB_EHCI_MSM_72K
 static struct platform_device *msm_host_devices[] = {
 	&msm_device_hsusb_host,
 };
