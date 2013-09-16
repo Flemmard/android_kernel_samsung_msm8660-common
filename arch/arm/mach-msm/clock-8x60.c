@@ -3645,7 +3645,11 @@ static struct clk_lookup msm_clocks_8x60[] = {
 #if defined(CONFIG_PN544_NFC)	
 	CLK_LOOKUP("core_clk",		gsbi10_qup_clk.c,	"qup_i2c.14"),
 #else
+#if defined(CONFIG_MACH_HTC)
+	CLK_LOOKUP("core_clk",		gsbi10_qup_clk.c,	"qup_i2c.11"),
+#else
 	CLK_LOOKUP("core_clk",		gsbi10_qup_clk.c,	"spi_qsd.1"),
+#endif
 #endif
 #if defined (CONFIG_EPEN_WACOM_G5SP)
     CLK_LOOKUP("core_clk",    gsbi11_qup_clk.c, "qup_i2c.18"),
@@ -3693,7 +3697,11 @@ static struct clk_lookup msm_clocks_8x60[] = {
 #if defined(CONFIG_PN544_NFC)
 	CLK_LOOKUP("iface_clk", 	gsbi10_p_clk.c, 	"qup_i2c.14"),
 #else
+#if defined(CONFIG_MACH_HTC)
+	CLK_LOOKUP("iface_clk",		gsbi10_p_clk.c,         "qup_i2c.11"),
+#else
 	CLK_LOOKUP("iface_clk",		gsbi10_p_clk.c,		"spi_qsd.1"),
+#endif
 #endif
 #if defined (CONFIG_EPEN_WACOM_G5SP)
     CLK_LOOKUP("iface_clk",     gsbi11_p_clk.c,    "qup_i2c.18"),
