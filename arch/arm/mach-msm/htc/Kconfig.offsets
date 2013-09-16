@@ -1,0 +1,4 @@
+config PHYS_OFFSET
+	hex
+	default "0x48000000" if ARCH_MSM8X60
+	default "0x10000000"

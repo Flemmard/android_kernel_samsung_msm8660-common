@@ -17,6 +17,7 @@
 #include <linux/types.h>
 #include <linux/list.h>
 #include <asm/setup.h>
+#include <mach/board-ext-htc.h>
 
 struct msm_pmem_setting{
 	resource_size_t pmem_start;
