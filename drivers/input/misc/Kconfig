@@ -557,4 +557,6 @@ config INPUT_BMP180
           To compile this driver as a module, choose M here: the
            module will be called bmp180.
 
+source "drivers/input/misc/mpu3050/Kconfig"
+
 endif
