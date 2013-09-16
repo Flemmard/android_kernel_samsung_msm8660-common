@@ -69,6 +69,8 @@ obj-$(CONFIG_PMIC8058_XOADC) += pmic8058-xoadc.o
 obj-$(CONFIG_TZCOM) += tzcom.o
 obj-$(CONFIG_QSEECOM) += qseecom.o
 obj-$(CONFIG_QFP_FUSE) += qfp_fuse.o
+obj-$(CONFIG_INPUT_ISL29028)	+= isl29028.o
+obj-$(CONFIG_INPUT_ISL29029)	+= isl29029.o
 obj-$(CONFIG_VIBETONZ) += vibetonz/
 ifeq ($(CONFIG_USE_A2220_B),y)
 obj-$(CONFIG_VP_A2220) += a2220b.o
