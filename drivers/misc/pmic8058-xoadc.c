@@ -632,7 +632,7 @@ int32_t pm8058_xoadc_clear_recentQ(void *h) {
 	/* Default value for switching off the arbiter after reading
 	   the ADC value. Bit 0 set to 0. */
 	if (adc_pmic->xoadc_queue_count == 0) {
-		rc = pm8058_xoadc_arb_cntrl(0, XOADC_PMIC_0, CHANNEL_MUXOFF);
+		rc = pm8058_xoadc_arb_cntrl(0, XOADC_PMIC_0);
 		if (rc < 0) {
 			pr_debug("%s: Configuring ADC Arbiter disable"
 						"failed\n", __func__);
