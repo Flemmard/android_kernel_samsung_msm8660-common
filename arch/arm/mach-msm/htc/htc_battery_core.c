@@ -91,7 +91,7 @@ static enum power_supply_property htc_battery_properties[] = {
 	POWER_SUPPLY_PROP_PRESENT,
 	POWER_SUPPLY_PROP_TECHNOLOGY,
 	POWER_SUPPLY_PROP_CAPACITY,
-	POWER_SUPPLY_PROP_OVERLOAD,
+        //	POWER_SUPPLY_PROP_OVERLOAD,
 };
 
 static enum power_supply_property htc_power_properties[] = {
@@ -942,6 +942,7 @@ int htc_battery_core_register(struct device *dev,
 
 	
 	for (i = 0; i < ARRAY_SIZE(htc_power_supplies); i++) {
+          printk(KERN_ERR "%s: will register %p (%s)\n", __func__, &htc_power_supplies[i], ((&htc_power_supplies[i])->name ? (&htc_power_supplies[i])->name : "nope"));
 		rc = power_supply_register(dev, &htc_power_supplies[i]);
 		if (rc)
 			BATT_ERR("Failed to register power supply"

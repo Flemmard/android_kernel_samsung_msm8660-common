@@ -716,6 +716,8 @@ config MACH_FSM9XXX_SURF
 
 endmenu
 
+source "arch/arm/mach-msm/htc/Kconfig"
+
 config MSM_STACKED_MEMORY
 	bool "Stacked Memory"
 	default y
@@ -730,6 +732,7 @@ config SEC_KERNEL_REBASE_FOR_PMEM_OPTIMIZATION
 	help
 	  This option is used to place kernel base to 0x48000000 instead of 0x40400000.
 
+if !MACH_HTC
 config PHYS_OFFSET
 	hex
 	default "0x40800000" if ARCH_MSM9615
@@ -745,6 +748,11 @@ config PHYS_OFFSET
 	default "0x48000000" if SAMSUNG_MEMORY_LAYOUT_ARRANGE
 	default "0x40400000" if ARCH_MSM8X60
 	default "0x10000000"
+endif
+
+if MACH_HTC
+source "arch/arm/mach-msm/htc/Kconfig.offsets"
+endif
 
 config KERNEL_PMEM_EBI_REGION
 	bool "Enable in-kernel PMEM region for EBI"
@@ -1614,6 +1622,7 @@ choice
 		bool "Reset the entire chip"
 endchoice
 
+if !MACH_HTC
 choice
 	prompt "TARGET SERIES"
 	default TARGET_SERIES_CELOX
@@ -1793,6 +1802,7 @@ choice
 			bool "JPN NTT SC-05D"
 
 endchoice
+endif
 
 config SAMSUNG_8X60_TABLET
 	bool "SAMSUNG 8x60 TABLET"

@@ -389,6 +389,10 @@ unsigned int get_max_lock(void);
 void set_min_lock(int freq);
 void set_max_lock(int freq);
 #endif
+#if !defined(MAX_FREQ_LIMIT) && defined(CONFIG_MACH_HTC)
+#define MAX_FREQ_LIMIT		1512000
+#endif
+
 
 /*********************************************************************
  *                       CPUFREQ DEFAULT GOVERNOR                    *

@@ -56,3 +56,8 @@ endif
    zreladdr-$(CONFIG_ARCH_FSM9XXX)	:= 0x10008000
 params_phys-$(CONFIG_ARCH_FSM9XXX)	:= 0x10000100
 initrd_phys-$(CONFIG_ARCH_FSM9XXX)	:= 0x12000000
+
+
+ifeq ($(CONFIG_MACH_HTC),y)
+include $(srctree)/$(MACHINE)/htc/Makefile.boot
+endif

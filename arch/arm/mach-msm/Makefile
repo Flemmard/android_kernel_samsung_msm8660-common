@@ -280,6 +280,8 @@ obj-$(CONFIG_MACH_SAPPHIRE) += board-sapphire-rfkill.o msm_vibrator.o
 
 obj-$(CONFIG_BROADCOM_WIFI) +=broadcom_wlan.o
 
+obj-$(CONFIG_MACH_HTC) += htc/
+
 CFLAGS_msm_vibrator.o += -Idrivers/staging/android
 
 obj-$(CONFIG_ARCH_FSM9XXX) += board-fsm9xxx.o

@@ -253,6 +253,7 @@ int power_supply_uevent(struct device *dev, struct kobj_uevent_env *env)
 		return ret;
 	}
 
+        printk(KERN_ERR "%s: POWER_SUPPLY_NAME=%s\n", __func__, psy->name);
 	dev_dbg(dev, "POWER_SUPPLY_NAME=%s\n", psy->name);
 
 	ret = add_uevent_var(env, "POWER_SUPPLY_NAME=%s", psy->name);
@@ -283,7 +284,7 @@ int power_supply_uevent(struct device *dev, struct kobj_uevent_env *env)
 		line = strchr(prop_buf, '\n');
 		if (line)
 			*line = 0;
-
+                printk(KERN_ERR "%s: attr.name=%s\n", __func__, (attr->attr.name ? attr->attr.name : "nope"));
 		attrname = kstruprdup(attr->attr.name, GFP_KERNEL);
 		if (!attrname) {
 			ret = -ENOMEM;
